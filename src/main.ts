@@ -4,7 +4,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 //@ts-ignore
-import { piniaYjsPlugin } from '@/libs/collaborative/dist/collaborative.js'
+import { piniaYjsPlugin } from '@/libs/collaborative.js'
 
 // top level or first sub level
 if (window.self === window.top || window.self.parent === window.top) {
