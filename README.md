@@ -1,8 +1,8 @@
 # vue-pinia-collaborative
 
-A vue3 pinia plugin for real-time collaboration, base on [yjs](https://github.com/yjs/yjs).
+## A vue3 pinia plugin for high performance real-time collaboration, huge data rendering on time. base on [yjs](https://github.com/yjs/yjs).
 
-一个实时在线协同的 pinia 插件
+## 一个超高性能的实时在线协同 vue pinia 插件，支持超大数据量实时渲染。不影响业务层代码。
 
 ![gif](https://github.com/tanghaojie/vue-pinia-collaborative/blob/master/screen_small.gif)
 
