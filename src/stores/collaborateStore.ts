@@ -11,7 +11,7 @@ import {
   defineAsyncYjsUniqueCollaborativeStore,
   useCollaborativeStoreActions,
   //@ts-ignore
-} from '@/libs/collaborative/dist/collaborative.js'
+} from '@/libs/collaborative.js'
 import { generateId, randomColor } from '@/libs/utils'
 
 const STORE_ID = 'CollaborateStore'
