@@ -14,7 +14,7 @@ provide('collaborateStores', collaborateStore)
 
 useCollaborateStore()
   .then(function (store) {
-    console.log(store)
+    // console.log(store)
     monitorConnectionStatus(store)
     collaborateStore.store = store
     connected.value = true

@@ -8,14 +8,12 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
-import { ref, reactive, computed, watch, onMounted, inject } from 'vue'
+import { ref, reactive, computed, watch, onMounted, inject, onUnmounted } from 'vue'
 //@ts-ignore
 import vueDraggableResizableTs from 'vue-draggable-resizable-ts'
 import 'vue-draggable-resizable-ts/dist/VueDraggableResizableTs.css'
-
-const props = defineProps<{
-  str?: string
-}>()
+//@ts-ignore
+import { useYjsStoreUnionUndoManager } from '@/libs/collaborative.js'
 
 const collaborateStore = inject<{
   store: StoreInstance | undefined
@@ -40,11 +38,28 @@ function add() {
   collaborateStore.addComponent()
 }
 
+const { enable, updateStore, undoEnable, redoEnable, undo, redo } = useYjsStoreUnionUndoManager({
+  uniqueStoreKey: collaborateStore,
+})
+
+const unwatchStore = watch(
+  function () {
+    return collaborateStore
+  },
+  function () {
+    updateStore('uniqueStoreKey', collaborateStore)
+  }
+)
+
 onMounted(function () {
   if (window.self !== window.top) {
     const app = document.getElementById('app')
     app && (app.style.height = '100%')
   }
+})
+
+onUnmounted(function () {
+  unwatchStore && unwatchStore()
 })
 </script>
 
@@ -74,6 +89,20 @@ onMounted(function () {
       <div @click="del(id)" class="del">del</div>
     </vue-draggable-resizable-ts>
     <div @click="add()" class="add">+</div>
+    <div @click="undo()" class="undo" :class="{ canUndo: undoEnable }">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path
+          d="M13.427 3.021h-7.427v-3.021l-6 5.39 6 5.61v-3h7.427c3.071 0 5.561 2.356 5.561 5.427 0 3.071-2.489 5.573-5.561 5.573h-7.427v5h7.427c5.84 0 10.573-4.734 10.573-10.573s-4.733-10.406-10.573-10.406z"
+        />
+      </svg>
+    </div>
+    <div @click="redo()" class="redo" :class="{ canRedo: redoEnable }">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path
+          d="M10.573 3.021h7.427v-3.021l6 5.39-6 5.61v-3h-7.427c-3.071 0-5.561 2.356-5.561 5.427 0 3.071 2.489 5.573 5.561 5.573h7.427v5h-7.427c-5.84 0-10.573-4.734-10.573-10.573s4.733-10.406 10.573-10.406z"
+        />
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -122,6 +151,42 @@ onMounted(function () {
   cursor: pointer;
   text-align: center;
   border-radius: 12px;
+}
+
+.undo {
+  position: fixed;
+  top: 120px;
+  left: 32px;
+  width: 48px;
+  height: 48px;
+  font-size: 32px;
+  color: white;
+  background: rgb(129, 129, 129);
+  cursor: pointer;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.undo.canUndo {
+  background: rgb(23, 104, 20);
+}
+
+.redo {
+  position: fixed;
+  top: 170px;
+  left: 32px;
+  width: 48px;
+  height: 48px;
+  font-size: 32px;
+  color: white;
+  background: rgb(129, 129, 129);
+  cursor: pointer;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.redo.canRedo {
+  background: rgb(23, 104, 20);
 }
 
 .add:hover {
