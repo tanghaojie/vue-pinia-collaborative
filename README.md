@@ -4,6 +4,8 @@ A vue3 pinia plugin for real-time collaboration, base on [yjs](https://github.co
 
 一个实时在线协同的 pinia 插件
 
+![](https://github.com/tanghaojie/vue-pinia-collaborative/blob/master/screen.gif)
+
 feats: - real-time collaboration - multi pinia store support - undo/redo combine multi store
 
 # Getting Started
