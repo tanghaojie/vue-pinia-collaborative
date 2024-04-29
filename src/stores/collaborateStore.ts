@@ -11,8 +11,8 @@ import {
   defineAsyncYjsUniqueCollaborativeStore,
   useCollaborativeStoreActions,
   //@ts-ignore
-} from '@/libs/collaborative/dist/collaborative'
-import { generateId, randomColor } from '@/libs/collaborative/dist/utils'
+} from '@/libs/collaborative/dist/collaborative.js'
+import { generateId, randomColor } from '@/libs/utils'
 
 const STORE_ID = 'CollaborateStore'
 const ROOMNAME = 'yjs-unique-roomname'
